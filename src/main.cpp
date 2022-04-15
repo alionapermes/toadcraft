@@ -2,14 +2,14 @@
 #include <ctime>
 #include <string>
 
-#include "boost/algorithm/string.hpp"
 #include "boost/program_options.hpp"
 #include "fmt/core.h"
 #include "fmt/format.h"
 #include "tgbot/tgbot.h"
 
 
-int main()
+int
+main()
 {
     using namespace fmt;
     namespace opt = boost::program_options;
@@ -28,21 +28,17 @@ int main()
     opt::store(opt::parse_config_file("../toadcraft.conf", desc), vm);
     vm.notify();
 
-
     TgBot::Bot bot(token);
-    bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
-        using namespace boost;
 
+    bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
         int randomed = std::rand() % 100;
         std::string answer;
-        std::vector<std::string> parts;
+        std::string thing = msg->text.substr(msg->text.find(' ') + 1);
 
-        split(parts, msg->text, is_any_of(" "), token_compress_on);
-
-        if (parts.size() > 1)
-            answer = std::to_string(randomed);
+        if (!thing.empty())
+            answer = format("Chance of\n[{}]: {}%", thing, randomed);
         else
-            answer = fmt::format("Chance of\n[{}]: {}", parts[1], randomed);
+            answer = std::to_string(randomed);
 
         bot.getApi().sendMessage(msg->chat->id, answer);
     });
