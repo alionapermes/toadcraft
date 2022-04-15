@@ -48,7 +48,7 @@ main()
         size_t space_index = msg->text.find(' ');
         std::string answer;
 
-        if (space_index > 0) {
+        if (space_index > 0 && space_index < msg->text.size()) {
             answer = format(
                 "Chance of\n[{}]: {}%",
                 msg->text.substr(space_index + 1),
