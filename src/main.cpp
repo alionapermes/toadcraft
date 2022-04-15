@@ -34,7 +34,7 @@ main()
     bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
         boost::trim_all(msg->text);
 
-        if (msg->from->username == "alionapermes" && msg->text != "/roll") {
+        if (msg->from->username == "talkenson" && msg->text != "/roll") {
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "иди нахуй",
