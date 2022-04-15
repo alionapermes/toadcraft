@@ -31,6 +31,15 @@ main()
     TgBot::Bot bot(token);
 
     bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
+        if (msg->from->username == "talkenson" && msg->text != "/roll") {
+            bot.getApi().sendMessage(
+                msg->chat->id,
+                "иди нахуй",
+                false,
+                msg->messageId
+            );
+            return;
+        }
         int randomed = std::rand() % 100;
         std::string answer;
         std::string thing = msg->text.substr(msg->text.find(' ') + 1);
@@ -49,6 +58,17 @@ main()
             "https://drive.google.com/drive/folders/"
             "1Pe2OAAG1FGmw5Zc29JCAWhCoIayuWi0F?usp=sharing"
         );
+    });
+
+    bot.getEvents().onCommand("help", [&bot](TgBot::Message::Ptr msg) {
+        if (msg->from->username == "talkenson") {
+            bot.getApi().sendMessage(
+                msg->chat->id,
+                "тебе ничего уже не поможет",
+                false,
+                msg->messageId
+            );
+        }
     });
 
     try {
