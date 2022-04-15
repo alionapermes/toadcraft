@@ -44,13 +44,17 @@ main()
             return;
         }
 
-        int randomed = std::rand() % 100;
+        int randomed       = std::rand() % 100;
+        size_t space_index = msg->text.find(' ');
         std::string answer;
-        std::string thing = msg->text.substr(msg->text.find(' ') + 1);
 
-        if (!thing.empty())
-            answer = format("Chance of\n[{}]: {}%", thing, randomed);
-        else
+        if (space_index > 0) {
+            answer = format(
+                "Chance of\n[{}]: {}%",
+                msg->text.substr(space_index + 1),
+                randomed
+            );
+        } else
             answer = std::to_string(randomed);
 
         bot.getApi().sendMessage(msg->chat->id, answer);
@@ -73,10 +77,6 @@ main()
                 msg->messageId
             );
         }
-    });
-
-    bot.getEvents().onCommand("me", [&bot](TgBot::Message::Ptr msg) {
-        bot.getApi().sendMessage(msg->chat->id, msg->from->username);
     });
 
     try {
