@@ -31,7 +31,7 @@ main()
     TgBot::Bot bot(token);
 
     bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
-        if (msg->from->username == "talkenson" && msg->text != "/roll") {
+        if (msg->from->username == "@talkenson" && msg->text != "/roll") {
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "иди нахуй",
@@ -61,7 +61,7 @@ main()
     });
 
     bot.getEvents().onCommand("help", [&bot](TgBot::Message::Ptr msg) {
-        if (msg->from->username == "talkenson") {
+        if (msg->from->username == "@talkenson") {
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "тебе ничего уже не поможет",
