@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 
+#include "boost/algorithm/string/trim_all.hpp"
 #include "boost/program_options.hpp"
 #include "fmt/core.h"
 #include "fmt/format.h"
@@ -31,7 +32,9 @@ main()
     TgBot::Bot bot(token);
 
     bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
-        if (msg->from->username == "@talkenson" && msg->text != "/roll") {
+        boost::trim_all(msg->text);
+
+        if (msg->from->username == "alionapermes" && msg->text != "/roll") {
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "иди нахуй",
@@ -40,6 +43,7 @@ main()
             );
             return;
         }
+
         int randomed = std::rand() % 100;
         std::string answer;
         std::string thing = msg->text.substr(msg->text.find(' ') + 1);
@@ -61,7 +65,7 @@ main()
     });
 
     bot.getEvents().onCommand("help", [&bot](TgBot::Message::Ptr msg) {
-        if (msg->from->username == "@talkenson") {
+        if (msg->from->username == "talkenson") {
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "тебе ничего уже не поможет",
@@ -69,6 +73,10 @@ main()
                 msg->messageId
             );
         }
+    });
+
+    bot.getEvents().onCommand("me", [&bot](TgBot::Message::Ptr msg) {
+        bot.getApi().sendMessage(msg->chat->id, msg->from->username);
     });
 
     try {
