@@ -2,6 +2,7 @@
 #include <ctime>
 #include <string>
 
+#include "boost/algorithm/string.hpp"
 #include "boost/program_options.hpp"
 #include "fmt/core.h"
 #include "fmt/format.h"
@@ -30,8 +31,28 @@ int main()
 
     TgBot::Bot bot(token);
     bot.getEvents().onCommand("roll", [&bot](TgBot::Message::Ptr msg) {
+        using namespace boost;
+
         int randomed = std::rand() % 100;
-        bot.getApi().sendMessage(msg->chat->id, std::to_string(randomed));
+        std::string answer;
+        std::vector<std::string> parts;
+
+        split(parts, msg->text, is_any_of(" "), token_compress_on);
+
+        if (parts.size() > 1)
+            answer = std::to_string(randomed);
+        else
+            answer = fmt::format("Chance of\n[{}]: {}", parts[1], randomed);
+
+        bot.getApi().sendMessage(msg->chat->id, answer);
+    });
+
+    bot.getEvents().onCommand("wannagf", [&bot](TgBot::Message::Ptr msg) {
+        bot.getApi().sendMessage(
+            msg->chat->id,
+            "https://drive.google.com/drive/folders/"
+            "1Pe2OAAG1FGmw5Zc29JCAWhCoIayuWi0F?usp=sharing"
+        );
     });
 
     try {
