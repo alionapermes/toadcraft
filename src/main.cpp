@@ -57,14 +57,16 @@ main()
         } else
             answer = std::to_string(randomed);
 
-        bot.getApi().sendMessage(msg->chat->id, answer);
+        bot.getApi().sendMessage(msg->chat->id, answer, false, msg->messageId);
     });
 
     bot.getEvents().onCommand("wannagf", [&bot](TgBot::Message::Ptr msg) {
         bot.getApi().sendMessage(
             msg->chat->id,
             "https://drive.google.com/drive/folders/"
-            "1Pe2OAAG1FGmw5Zc29JCAWhCoIayuWi0F?usp=sharing"
+            "1Pe2OAAG1FGmw5Zc29JCAWhCoIayuWi0F?usp=sharing",
+            false,
+            msg->messageId
         );
     });
 
@@ -73,6 +75,17 @@ main()
             bot.getApi().sendMessage(
                 msg->chat->id,
                 "тебе ничего уже не поможет",
+                false,
+                msg->messageId
+            );
+        }
+    });
+
+    bot.getEvents().onCommand("wannabf", [&bot](TgBot::Message::Ptr msg) {
+        if (msg->from->username == "talkenson") {
+            bot.getApi().sendMessage(
+                msg->chat->id,
+                "t.me/secretdzen",
                 false,
                 msg->messageId
             );
