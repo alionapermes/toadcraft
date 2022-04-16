@@ -13,6 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(
     bot
     src/main.cpp
+    src/router.cpp
 )
 target_link_libraries(bot ${CONAN_LIBS})
 
