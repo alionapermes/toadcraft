@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <ctime>
+#include <exception>
 #include <string>
 
 #include "boost/algorithm/string/trim_all.hpp"
@@ -39,16 +40,19 @@ main()
     router.route("wannagf", tc::onWannaGf);
     router.route("wannabf", tc::onWannaBf);
 
-    try {
-        print("Bot username: {}\n", bot.getApi().getMe()->username.c_str());
-        TgBot::TgLongPoll long_poll(bot);
+    while (true) {
+        print("=== start ===\n");
 
-        while (true) {
-            print("Long poll started\n");
-            long_poll.start();
+        try {
+            TgBot::TgLongPoll long_poll(bot);
+
+            while (true) {
+                print("Long poll started\n");
+                long_poll.start();
+            }
+        } catch (const std::exception& e) {
+            print("error: {}\n", e.what());
         }
-    } catch (const TgBot::TgException& e) {
-        print("error: {}\n", e.what());
     }
 
     return 0;
