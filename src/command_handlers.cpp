@@ -25,9 +25,9 @@ tc::onRoll(TgBot::Message::Ptr msg)
         if (
             msg->text.find("кпоп") != std::string::npos
             || msg->text.find("kpop") != std::string::npos
-        ) answer += "\n*--------*\nпочему рот в кпопе?";
+        ) answer += "\n--------\nпочему рот в кпопе?";
         else if (msg->text.find("панк") != std::string::npos)
-            answer += "\n*--------*\nпанки хой";
+            answer += "\n--------\nпанки хой";
     } else
         answer = std::to_string(randomed);
 
