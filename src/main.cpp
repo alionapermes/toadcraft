@@ -9,6 +9,7 @@
 #include "tgbot/tgbot.h"
 
 #include "router.hpp"
+#include "command_handlers.hpp"
 
 
 int
@@ -31,10 +32,12 @@ main()
     opt::store(opt::parse_config_file("../toadcraft.conf", desc), vm);
     vm.notify();
 
-    tc::Router router;
     TgBot::Bot bot(token);
+    tc::Router router(bot);
 
-    router.route(&bot);
+    router.route("roll", tc::onRoll);
+    router.route("wannagf", tc::onWannaGf);
+    router.route("wannabf", tc::onWannaBf);
 
     try {
         print("Bot username: {}\n", bot.getApi().getMe()->username.c_str());

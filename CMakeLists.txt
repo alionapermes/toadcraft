@@ -14,6 +14,8 @@ add_executable(
     bot
     src/main.cpp
     src/router.cpp
+    src/command_handlers.cpp
 )
+
 target_link_libraries(bot ${CONAN_LIBS})
 

@@ -1,4 +1,10 @@
+#pragma once
+
+#include <functional>
+#include <string>
+
 #include "fmt/format.h"
+#include "tgbot/EventBroadcaster.h"
 #include "tgbot/tgbot.h"
 
 
@@ -8,13 +14,16 @@ namespace tc {
 class Router
 {
 private:
-    TgBot::Bot* _bot;
+    TgBot::Bot& bot_;
 
 public:
-    Router() = default;
+    Router(TgBot::Bot& bot) : bot_(bot) {};
 
 public:
-    void route(TgBot::Bot* bot);
+    using ReplyHandler = std::function<std::string (TgBot::Message::Ptr)>;
+
+    void
+    route(const std::string& command, ReplyHandler handler);
 };
 
 
