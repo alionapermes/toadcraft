@@ -14,10 +14,12 @@ tc::onRoll(TgBot::Message::Ptr msg)
     std::string answer;
 
     if (space_index > 0 && space_index < msg->text.size()) {
-        answer = fmt::format(
-            "Chance of\n[{}]: {}%",
-            msg->text.substr(space_index + 1),
-            randomed
+        std::string thing = msg->text.substr(space_index + 1);
+
+        answer = (
+            msg->from->username == "nkysxx"
+            ? fmt::format("Hot Cat says\n[{}]: {}%", thing, randomed)
+            : fmt::format("Chance of\n[{}]: {}%", thing, randomed)
         );
     } else
         answer = std::to_string(randomed);
