@@ -21,6 +21,13 @@ tc::onRoll(TgBot::Message::Ptr msg)
             ? fmt::format("Hot Cat says\n[{}]: {}%", thing, randomed)
             : fmt::format("Chance of\n[{}]: {}%", thing, randomed)
         );
+
+        if (
+            msg->text.find("кпоп") != std::string::npos
+            || msg->text.find("kpop") != std::string::npos
+        ) answer += "\n*--------*\nпочему рот в кпопе?";
+        else if (msg->text.find("панк") != std::string::npos)
+            answer += "\n*--------*\nпанки хой";
     } else
         answer = std::to_string(randomed);
 
