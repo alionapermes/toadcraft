@@ -9,9 +9,12 @@ tc::onRoll(TgBot::Message::Ptr msg)
 {
     boost::trim_all(msg->text);
 
-    int randomed       = std::rand() % 100;
+    int randomed       = std::rand() % 101;
     size_t space_index = msg->text.find(' ');
     std::string answer;
+
+    if (randomed == 100)
+        randomed = 146;
 
     if (space_index > 0 && space_index < msg->text.size()) {
         std::string thing = msg->text.substr(space_index + 1);
